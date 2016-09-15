@@ -10,9 +10,18 @@ import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
 import CustomActions from './CustomActions';
 import CustomView from './CustomView';
 
+// Action cable
+import ActionCable from 'action-cable-react-native'
+const App = {}
+
+
 export default class Example extends React.Component {
+
+
   constructor(props) {
     super(props);
+    var self = this;
+
     this.state = {
       messages: [],
       loadEarlier: true,
@@ -29,6 +38,24 @@ export default class Example extends React.Component {
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
 
     this._isAlright = null;
+
+    // action cable
+    this.App = {};
+    this.App.cable = ActionCable.createConsumer("ws://localhost:4000/cable")
+    this.App.room_chat = this.App.cable.subscriptions.create("RoomChannel",{
+      connected: function() {
+        console.log("connected: action cable")
+      },
+      disconnected: function() {
+        console.log("disconnected: action cable")
+      },
+      received: function(data) {
+        self.onReceive(data["messaga"]);
+      },
+      chat_test: function(message) {
+        return this.perform('chat_test', { message: message, app: "chat"});
+      }
+    });
   }
 
   componentWillMount() {
@@ -72,8 +99,11 @@ export default class Example extends React.Component {
     });
 
     // for demo purpose
+    this.App.room_chat.chat_test("test")
+
     this.answerDemo(messages);
   }
+
 
   answerDemo(messages) {
     if (messages.length > 0) {

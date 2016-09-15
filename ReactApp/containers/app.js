@@ -54,25 +54,6 @@ var styles = StyleSheet.create({
   }
 });
 
-// Action cable
-
-import ActionCable from 'action-cable-react-native'
-const App = {}
-App.cable = ActionCable.createConsumer("ws://localhost:4000/cable")
-App.room_chat = App.cable.subscriptions.create("RoomChannel",{
-  connected: function() {
-    console.log("connected: action cable")
-  },
-  disconnected: function() {
-    console.log("disconnected: action cable")
-  },
-  received: function(data) {
-    console.log("data:" + data)
-  },
-  chat_test: function(message) {
-    return this.perform('chat_test', { message: message, app: "chat"});
-  }
-});
 
 /* Component ==================================================================== */
 class AppContainer extends Component {
