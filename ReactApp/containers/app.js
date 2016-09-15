@@ -59,8 +59,8 @@ class AppContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
-      loadedCookie: false
+      loggedIn: true, // debug:true
+      loadedCookie: true // debug:true
     };
   }
 
@@ -83,7 +83,8 @@ class AppContainer extends Component {
         isAuthenticated = true;
       }
       else {
-        isAuthenticated = false;
+        isAuthenticated = true;
+        // isAuthenticated = false; // debug
       }
 
       this.setState({
@@ -195,7 +196,7 @@ class AppContainer extends Component {
                 index: 0,
                 navigator: this.refs.rootNavigator,
                 passProps: {
-                  showSplashScreen: true,
+                  showSplashScreen: false,
                 }
               }} />
 
