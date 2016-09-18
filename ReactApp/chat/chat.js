@@ -11,7 +11,7 @@ import CustomActions from './CustomActions';
 import CustomView from './CustomView';
 
 // Action cable
-import ActionCable from 'action-cable-react-native'
+import ActionCable from 'react-native-actioncable'
 const App = {}
 
 
